@@ -52,6 +52,7 @@ IEEE
 {%for category in categories%}
     <div class="col">
         <div class="card shadow-sm bg-dark">
+          <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
           <div class="card-body">
             <p class="card-text">{{category.name}}</p>
             <div class="d-flex justify-content-between align-items-center">
@@ -64,5 +65,34 @@ IEEE
       </div>
 {%endfor%}
 </div>
+<div class='col'>
+  <nav class="navbar navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">
+      Total Amount Earned: ${{total}}
+    </a>
+  </nav>
+  <table class="table table-bordered table-dark">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Customer Email</th>
+        <th scope="col">Product Name</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Total ($)</th>
+      </tr>
+    </thead>
+    <tbody>
+      {%for order in order_info%}
+      <tr>
+        <th scope="row">{{order.id}}</th>
+        <td>{{order.customer_email}}</td>
+        <td>{{order.product_name}}</td>
+        <td>{{order.quantity}}</td>
+        <td>{{order.total}}</td>
+      </tr>
+      {%endfor%}
+    </tbody>
+  </table>
+  </div>
 
 {%endblock%}

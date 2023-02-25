@@ -3,10 +3,10 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, login_required, logout_user, current_user
 from flask_login import login_required, current_user
 from . import db
-from .models import User, Stores, Categories, Products
+from .models import User, Stores, Categories, Products, Orders, Customers
 views = Blueprint('views', __name__)
 
-@views.route('/')
+@views.route('/', methods=['GET','POST'])
 def original():
     if request.method == 'POST':
         data = request.form
@@ -35,6 +35,20 @@ def homepage():
     store_name = store.name if store else None
     store_location = store.location if store else None
     store_id = store.id if store else None
+    orders = Orders.query.filter_by(store_id=store_id).all() if store_id else None
+    
+    total = Orders.query.filter_by(store_id=store_id).with_entities(db.func.sum(Orders.total)).scalar() if store_id else None
+    order_info = []
+    for order in orders:
+        order_details = {}
+        order_details['id'] = order.id
+        order_details['customer_email'] = Customers.query.filter_by(id=order.customers_id).first().email
+        order_details['product_name'] = Products.query.filter_by(id=order.products_id).first().name
+        order_details['quantity'] = order.quantity
+        order_details['total'] = order.quantity * Products.query.filter_by(id=order.products_id).first().price
+        order_info.append(order_details)
+        
+    
     
     if request.method == 'POST':
         data = request.form
@@ -56,11 +70,11 @@ def homepage():
         else:
             flash('Please fill all the fields', category='error')
             
-    
-            
-    if store_name and store_location and categories:
+    if store_name and store_location and categories and orders:
+        return render_template("homepage.html", user=current_user, store_name=store_name, store_location=store_location, categories=categories, store_id=store_id, order_info=order_info, total=total)
+    elif store and categories:
         return render_template("homepage.html", user=current_user, store_name=store_name, store_location=store_location, categories=categories, store_id=store_id)
-    elif store_name and store_location:
+    elif store:
         return render_template("homepage.html", user=current_user, store_name=store_name, store_location=store_location, store_id=store_id)
     else:
         return render_template("homepage.html", user=current_user)

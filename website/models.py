@@ -45,7 +45,6 @@ class Orders(db.Model):
     products_id = db.Column(db.Integer, db.ForeignKey("products.id"))
     quantity = db.Column(db.Integer)
     total = db.Column(db.Integer)
-    date = db.Column(db.DateTime)
 
 
 class Customers(db.Model, UserMixin):
