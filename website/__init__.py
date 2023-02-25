@@ -16,10 +16,12 @@ def config_app():
     # Importing the blueprints
     from .views import views
     from .auth import auth
+    from .menu import menu
     
     # Registering the blueprints
     app.register_blueprint(views, url_prefix='/')
     app.register_blueprint(auth, url_prefix='/auth')
+    app.register_blueprint(menu, url_prefix='/menu')
     
     from .models import User, Stores, Categories, Products
     
