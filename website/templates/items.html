@@ -1,0 +1,44 @@
+{%extends "base.html"%}
+
+{%block title%}
+Add Items
+{%endblock%}
+
+{%block navbar%}
+Add Items
+{%endblock%}
+
+{% block banner%}
+<section class="py-5 text-center container">
+  <div class="row py-lg-5">
+    <div class="col-lg-6 col-md-8 mx-auto">
+      <h1 class="fw-light mt-5">Items For Category: {{category.name}} </h1>
+      <p>
+        <a href="/add_item/{{category.id}}" class="btn btn-primary my-2">Add Item</a>
+      </p>
+    </div>
+  </div>
+</section>
+{%endblock%}
+
+{%block main%}
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+{%for item in items%}
+      <div class="col">
+        <div class="card shadow-sm bg-dark">
+          <div class="card-body">
+            <p class="card-text">{{item.name}}</p>
+            <p class="card-text">{{item.description}}</p>
+            <p class="card-text">${{item.price}}</p>
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="btn-group">
+                <a href="/items" class="btn btn-sm btn-outline-secondary">Edit</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+{%endfor%}
+</div>
+
+{%endblock%}

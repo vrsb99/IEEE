@@ -8,21 +8,29 @@ IEEE
 IEEE
 {%endblock%}
 
+{%block css%}
+<link rel="stylesheet" href="{{url_for('static', filename='/signin.css')}}">
+{%endblock%}
+
 {% block banner%}
 <section class="py-5 text-center container">
   <div class="row py-lg-5">
-    <div class="col-lg-6 col-md-8 mx-auto"
+    <div class="form-signin col-lg-6 col-md-8 mx-auto">
         <form method = 'POST'>
             <div class='mb-3'>
-            <input class="form-control" id="floatingInput" placeholder="Store Name" name = 'store_name'>
+            <input class="form-control" id="floatingInput" placeholder='Store' name ='store_name' value="{{store_name}}" required>
             </div>
             <div class='mb-3'>
-            <input class="form-control" id="floatingInput" placeholder="Location Info" name = 'location_info'>
+            <input class="form-control" id="floatingInput" placeholder='Location' name = 'store_location' value="{{store_location}}" required>
+            <div class='mt-3'>
+            <button type="submit" class="btn btn-primary">Save Store Information</button>
+            </div>
         </form>
-      <h1 class="fw-light mt-5">Categories Page</h1>
+      <h1 class="fw-light mt-3">Categories</h1>
       <p>
-        <a href="#" class="btn btn-primary my-2">Add Category</a>
+        <a href="/add_category" class="btn btn-primary my-2">Add Category</a>
       </p>
+    
       <p class="lead text-muted">Click the respective cateogries to add menu items</p>
     </div>
   </div>
@@ -31,19 +39,15 @@ IEEE
 
 {%block main%}
 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-{%for i in range(6)%}
+{%for category in categories%}
     <div class="col">
         <div class="card shadow-sm bg-dark">
-          <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-  
           <div class="card-body">
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            <p class="card-text">{{category.name}}</p>
             <div class="d-flex justify-content-between align-items-center">
               <div class="btn-group">
-                <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                <a href="/category/{{category.id}}" class="btn btn-sm btn-outline-secondary">View</a>
               </div>
-              <small class="text-muted">9 mins</small>
             </div>
           </div>
         </div>

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{%block title%}Client{%endblock%}
+{%block navbar%}Add Category{%endblock%}
+
+{%block css%}
+<link rel="stylesheet" href="{{url_for('static', filename='/signin.css')}}">
+{%endblock%}
+
+{%block main%}
+<div class = "form-signin text-dark">
+<h1 class="h3 mb-3 fw-normal text-white">Add New Item</h1>
+  <form method = 'POST'>
+    <div class="form-floating mb-3">
+      <input class="form-control" id="floatingInput" placeholder="Item Name" name = 'item_name' required>
+      <label for="floatingInput">Item Name</label>
+    </div>
+    <div class="form-floating mb-3">
+      <input class="form-control" id="floatingInput" placeholder="Item Description" name = 'item_description' required>
+      <label for="floatingInput">Item Description</label>
+    </div>
+    <div class="form-floating mb-3">
+      <input class="form-control" id="floatingInput" placeholder="Price" name = 'item_price' required>
+      <label for="floatingInput">Price</label>
+    </div>
+    <button class="w-100 btn btn-lg btn-primary" type="submit">Save</button>
+  </form>
+</div>
+{%endblock%}
