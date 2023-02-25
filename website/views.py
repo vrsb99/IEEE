@@ -4,7 +4,11 @@ from . import db
 from .models import User, Stores, Categories, Products
 views = Blueprint('views', __name__)
 
-@views.route('/', methods=['GET','POST'])
+@views.route('/')
+def original():
+    return redirect(url_for('auth.login'))
+
+@views.route('/homepage', methods=['GET','POST'])
 @login_required
 def homepage():
     store = Stores.query.filter_by(user_id=current_user.id).first()
