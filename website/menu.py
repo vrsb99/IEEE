@@ -10,6 +10,5 @@ def homepage(store_id):
     store = Stores.query.filter_by(id=store_id).first()
     categories = Categories.query.filter_by(store_id=store_id).all()
     products = Products.query.filter_by(store_id=store_id).all()
-    print([(product.name,product.category_id) for product in products])
     return render_template("menu.html", user=current_user, store=store, categories=categories, products=products)
 

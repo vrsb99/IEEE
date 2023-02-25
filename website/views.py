@@ -1,4 +1,6 @@
 from flask import Flask, Blueprint, render_template, request, flash, redirect, url_for, session, send_file
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import login_user, login_required, logout_user, current_user
 from flask_login import login_required, current_user
 from . import db
 from .models import User, Stores, Categories, Products
@@ -6,7 +8,24 @@ views = Blueprint('views', __name__)
 
 @views.route('/')
 def original():
-    return redirect(url_for('auth.login'))
+    if request.method == 'POST':
+        data = request.form
+        email = data.get('email')
+        password = data.get('password')
+        
+        user = User.query.filter_by(email=email).first()
+        
+        if user:
+            if check_password_hash(user.password, password):
+                flash('Logged in successfully', category='success')
+                login_user(user, remember=True)
+                return redirect(url_for('views.homepage'))
+            else:
+                flash('Incorrect password, try again', category='error')
+        else:
+            flash('Email does not exist', category='error')
+    
+    return render_template("login.html", user=current_user)
 
 @views.route('/homepage', methods=['GET','POST'])
 @login_required
