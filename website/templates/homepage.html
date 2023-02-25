@@ -5,7 +5,7 @@ IEEE
 {%endblock%}
 
 {%block navbar%}
-IEEE
+<span class="text-success">@</span><span class="text-danger">I</span><span class="text-warning">E</span><span class="text-primary">E</span><span class="text-success">E</span><span class="text-danger">2</span><span class="text-warning">0</span><span class="text-primary">2</span><span class="text-success">3</span>
 {%endblock%}
 
 {%block css%}
@@ -18,10 +18,10 @@ IEEE
     <div class="form-signin col-lg-6 col-md-8 mx-auto">
         <form method = 'POST'>
             <div class='mb-3'>
-            <input class="form-control" id="floatingInput" placeholder='Store' name ='store_name' value="{{store_name}}" required>
+            <input class="form-control text-center" id="floatingInput" placeholder='Store Name' name = 'store_name' value="{{store_name}}" required>
             </div>
             <div class='mb-3'>
-            <input class="form-control" id="floatingInput" placeholder='Location' name = 'store_location' value="{{store_location}}" required>
+            <input class="form-control text-center" id="floatingInput" placeholder='Location' name = 'store_location' value="{{store_location}}" required>
             <div class='mt-3'>
             <button type="submit" class="btn btn-primary">Save Store Information</button>
             </div>
