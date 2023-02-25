@@ -38,15 +38,17 @@ def homepage():
     orders = Orders.query.filter_by(store_id=store_id).all() if store_id else None
     
     total = Orders.query.filter_by(store_id=store_id).with_entities(db.func.sum(Orders.total)).scalar() if store_id else None
-    order_info = []
-    for order in orders:
-        order_details = {}
-        order_details['id'] = order.id
-        order_details['customer_email'] = Customers.query.filter_by(id=order.customers_id).first().email
-        order_details['product_name'] = Products.query.filter_by(id=order.products_id).first().name
-        order_details['quantity'] = order.quantity
-        order_details['total'] = order.quantity * Products.query.filter_by(id=order.products_id).first().price
-        order_info.append(order_details)
+    
+    if orders:
+        order_info = []
+        for order in orders:
+            order_details = {}
+            order_details['id'] = order.id
+            order_details['customer_email'] = Customers.query.filter_by(id=order.customers_id).first().email
+            order_details['product_name'] = Products.query.filter_by(id=order.products_id).first().name
+            order_details['quantity'] = order.quantity
+            order_details['total'] = order.quantity * Products.query.filter_by(id=order.products_id).first().price
+            order_info.append(order_details)
         
     
     

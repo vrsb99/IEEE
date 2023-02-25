@@ -65,6 +65,7 @@ IEEE
       </div>
 {%endfor%}
 </div>
+{%if order_info%}
 <div class='col'>
   <nav class="navbar navbar-dark bg-dark">
     <a class="navbar-brand" href="#">
@@ -91,6 +92,7 @@ IEEE
         <td>{{order.total}}</td>
       </tr>
       {%endfor%}
+      {%endif%}
     </tbody>
   </table>
   </div>
