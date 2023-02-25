@@ -4,7 +4,7 @@ from werkzeug.utils import secure_filename
 from flask_login import login_user, login_required, logout_user, current_user
 from flask_login import login_required, current_user
 from . import db
-from .models import User, Stores, Categories, Products, Orders, Customers
+from .models import User, Stores, Categories, Products, Orders
 import base64
 views = Blueprint('views', __name__)
 
@@ -47,9 +47,10 @@ def homepage():
     total = Orders.query.filter_by(store_id=store_id).with_entities(db.func.sum(Orders.total)).scalar() if store_id else None
     
     images = {}
-    for category in categories:
-        if category.image:
-            images[category.id] = base64.b64encode(category.image).decode('utf-8')
+    if categories:
+        for category in categories:
+            if category.image:
+                images[category.id] = base64.b64encode(category.image).decode('utf-8')
         
     
     if orders:
@@ -57,7 +58,6 @@ def homepage():
         for order in orders:
             order_details = {}
             order_details['id'] = order.id
-            order_details['customer_email'] = Customers.query.filter_by(id=order.customers_id).first().email
             order_details['product_name'] = Products.query.filter_by(id=order.products_id).first().name
             order_details['quantity'] = order.quantity
             order_details['total'] = order.quantity * Products.query.filter_by(id=order.products_id).first().price
@@ -141,7 +141,7 @@ def add_items(store_id, category_id):
         image = request.files.get('item_image')
         
         if item_name and item_price and item_description:
-            new_item = Products(name=item_name, description=item_description, price=item_price, category_id=category_id)
+            new_item = Products(name=item_name, description=item_description, price=item_price, category_id=category_id, store_id=store_id)
             
             if image and allowed_file(image.filename):
                 new_item.image = image.read()

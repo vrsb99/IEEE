@@ -30,6 +30,8 @@ Menu
 
 {%block main%}
 <!-- Image and text -->
+<form method="POST" >
+<button type="submit" class="btn btn-primary">Add to Cart</button>
 {%for category in categories%}
 <nav class="navbar navbar-dark bg-dark">
   <a class="navbar-brand" href="#">
@@ -37,23 +39,33 @@ Menu
   </a>
 </nav>
 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-{%for product in products if product.category_id == category.id%}
-      <div class="col">
-        <div class="card shadow-sm bg-dark">
-          <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+  {% for product in products if product.category_id == category.id %}
+  <div class="col">
+      <div class="card shadow-sm bg-dark">
+          {% if product.image %}
+              <img src="data:image/png;base64,{{ images[product.id] }}" class="card-img-top" height="225" width="100%" style="object-fit: contain">
+          {% else %}
+              <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+                  <title>Placeholder</title>
+                  <rect width="100%" height="100%" fill="#55595c"/>
+                  <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
+              </svg>
+          {% endif %}
           <div class="card-body">
-            <p class="card-text">{{product.name}}</p>
-            <p class="card-text">{{product.description}}</p>
-            <p class="card-text">${{product.price}}</p>
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="btn-group">
-                <Input type="number" class="btn btn-sm btn-outline-secondary" min="0" max="20">
+              <p class="card-text">Name: {{ product.name }}</p>
+              <p class="card-text">Description: {{ product.description }}</p>
+              <p class="card-text">${{ product.price }}</p>
+              <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group">
+                      <input type="number" class="btn btn-sm btn-outline-secondary text-white" value="0" min="0" max="10" id="quantity{{ product.id }}" name="{{ product.id }}">
+                  </div>
               </div>
-            </div>
           </div>
-        </div>
       </div>
-{%endfor%}
+  </div>
+{% endfor %}
+
 </div>
 {%endfor%}
+</form>
 {%endblock%}
