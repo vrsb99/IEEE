@@ -1,14 +1,14 @@
-<mxfile host="app.diagrams.net" modified="2023-02-25T04:02:17.457Z" agent="5.0 (X11; Ubuntu)" etag="9LgjemFrJFu4uIZmkGLo" version="20.8.23" type="github">
+<mxfile host="app.diagrams.net" modified="2023-02-25T05:12:39.798Z" agent="5.0 (X11; Ubuntu)" etag="iX8EClask1lEtj46ms3F" version="20.8.23" type="github">
   <diagram name="Page-1" id="H4HJGLfZcfQgHLBg135O">
     <mxGraphModel dx="1360" dy="795" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="aZFSHv8Zsd38NP5G6fSy-4" value="&lt;div&gt;Authentication&lt;/div&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+        <mxCell id="aZFSHv8Zsd38NP5G6fSy-4" value="&lt;div&gt;Authentication&lt;/div&gt;&lt;div&gt;(DONE)&lt;br&gt;&lt;/div&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
           <mxGeometry x="160" y="220" width="60" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="aZFSHv8Zsd38NP5G6fSy-5" value="&lt;div&gt;Clients&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
-          <mxGeometry x="160" y="100" width="60" height="30" as="geometry" />
+        <mxCell id="aZFSHv8Zsd38NP5G6fSy-5" value="&lt;div&gt;Clients&lt;/div&gt;&amp;nbsp;(DONE)" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="155" y="95" width="70" height="40" as="geometry" />
         </mxCell>
         <mxCell id="aZFSHv8Zsd38NP5G6fSy-7" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
@@ -62,7 +62,7 @@
           <mxGeometry x="535" y="315" width="50" height="30" as="geometry" />
         </mxCell>
         <mxCell id="aZFSHv8Zsd38NP5G6fSy-28" value="QR code generated" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
-          <mxGeometry x="285" y="100" width="130" height="30" as="geometry" />
+          <mxGeometry x="315" y="205" width="130" height="30" as="geometry" />
         </mxCell>
         <mxCell id="aZFSHv8Zsd38NP5G6fSy-29" value="" style="endArrow=classic;html=1;rounded=0;exitX=1.008;exitY=0.05;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="aZFSHv8Zsd38NP5G6fSy-8" target="aZFSHv8Zsd38NP5G6fSy-28">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
@@ -70,10 +70,10 @@
             <mxPoint x="300" y="480" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="aZFSHv8Zsd38NP5G6fSy-30" value="" style="endArrow=classic;html=1;rounded=0;exitX=1.023;exitY=0.2;exitDx=0;exitDy=0;exitPerimeter=0;entryX=-0.012;entryY=0.4;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="aZFSHv8Zsd38NP5G6fSy-28" target="aZFSHv8Zsd38NP5G6fSy-19">
+        <mxCell id="aZFSHv8Zsd38NP5G6fSy-30" value="" style="endArrow=classic;html=1;rounded=0;exitX=1.038;exitY=0.433;exitDx=0;exitDy=0;exitPerimeter=0;entryX=-0.02;entryY=0.433;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="aZFSHv8Zsd38NP5G6fSy-28" target="aZFSHv8Zsd38NP5G6fSy-20">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="400" y="440" as="sourcePoint" />
-            <mxPoint x="450" y="390" as="targetPoint" />
+            <mxPoint x="420" y="110" as="sourcePoint" />
+            <mxPoint x="530" y="210" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="aZFSHv8Zsd38NP5G6fSy-41" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="aZFSHv8Zsd38NP5G6fSy-37" target="aZFSHv8Zsd38NP5G6fSy-40">
