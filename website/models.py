@@ -22,6 +22,7 @@ class Stores(db.Model):
 class Categories(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(150))
+    image = db.Column(db.LargeBinary)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     store_id = db.Column(db.Integer, db.ForeignKey("stores.id"))
     products = db.relationship("Products")
@@ -32,6 +33,7 @@ class Products(db.Model):
     name = db.Column(db.String(150))
     description = db.Column(db.String(150))
     price = db.Column(db.Integer)
+    image = db.Column(db.LargeBinary)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     category_id = db.Column(db.Integer, db.ForeignKey("categories.id"))
     store_id = db.Column(db.Integer, db.ForeignKey("stores.id"))

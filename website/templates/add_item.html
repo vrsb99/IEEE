@@ -1,28 +1,30 @@
 {% extends "base.html" %}
-{%block title%}Client{%endblock%}
-{%block navbar%}Add Category{%endblock%}
+{% block title %}Client{% endblock %}
+{% block navbar %}Add Category{% endblock %}
 
-{%block css%}
-<link rel="stylesheet" href="{{url_for('static', filename='/signin.css')}}">
-{%endblock%}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='/signin.css') }}">
+{% endblock %}
 
-{%block main%}
-<div class = "form-signin text-dark">
-<h1 class="h3 mb-3 fw-normal text-white">Add New Item</h1>
-  <form method = 'POST'>
-    <div class="form-floating mb-3">
-      <input class="form-control" id="floatingInput" placeholder="Item Name" name = 'item_name' required>
-      <label for="floatingInput">Item Name</label>
-    </div>
-    <div class="form-floating mb-3">
-      <input class="form-control" id="floatingInput" placeholder="Item Description" name = 'item_description' required>
-      <label for="floatingInput">Item Description</label>
-    </div>
-    <div class="form-floating mb-3">
-      <input class="form-control" id="floatingInput" placeholder="Price" name = 'item_price' required>
-      <label for="floatingInput">Price</label>
-    </div>
-    <button class="w-100 btn btn-lg btn-primary" type="submit">Save</button>
-  </form>
+{% block main %}
+<div class="form-signin text-dark">
+    <h1 class="h3 mb-3 fw-normal text-white">Add New Item</h1>
+    <form method='POST' enctype="multipart/form-data">
+        <div class="form-floating mb-3">
+            <input class="form-control" id="item-name" placeholder="Item Name" name='item_name' required>
+            <label for="item-name">Item Name</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input class="form-control" id="item-description" placeholder="Item Description" name='item_description' required>
+            <label for="item-description">Item Description</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input class="form-control" id="item-price" placeholder="Price" name='item_price' required pattern="[0-9]+">
+            <label for="item-price">Price</label>
+        </div>
+        <label class="form-label" for="customFile">Default file input example</label>
+        <input type="file" class="form-control mb-3" id="customFile" name='item_image' />
+        <button class="w-100 btn btn-lg btn-primary" type="submit">Save</button>
+    </form>
 </div>
-{%endblock%}
+{% endblock %}
