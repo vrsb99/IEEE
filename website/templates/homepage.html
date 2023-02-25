@@ -28,10 +28,20 @@ IEEE
         </form>
       <h1 class="fw-light mt-3">Categories</h1>
       <p>
-        <a href="/add_category" class="btn btn-primary my-2">Add Category</a>
+        {%if store_id%}
+        <div class='mb-3'>
+        <a href="/add_category/{{store_id}}" class="btn btn-primary my-2">Add Category</a>
+        </div>
+        <div class='mb-3'>
+        <a href="/qr/{{store_id}}" class="btn btn-primary my-2">QR Code</a>
+        </div>
+        {%else%}
+        <p>Save store information to add categories</p>
+        {%endif%}
       </p>
-    
+      {%if store_id%}
       <p class="lead text-muted">Click the respective cateogries to add menu items</p>
+    {%endif%}
     </div>
   </div>
 </section>
@@ -46,7 +56,7 @@ IEEE
             <p class="card-text">{{category.name}}</p>
             <div class="d-flex justify-content-between align-items-center">
               <div class="btn-group">
-                <a href="/category/{{category.id}}" class="btn btn-sm btn-outline-secondary">View</a>
+                <a href="/category/{{store_id}}/{{category.id}}" class="btn btn-sm btn-outline-secondary">View</a>
               </div>
             </div>
           </div>

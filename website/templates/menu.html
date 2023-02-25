@@ -11,44 +11,40 @@ Menu
 {% block banner%}
 <section class="py-5 text-center container">
   <div class="row py-lg-5">
-    <div class="col-lg-6 col-md-8 mx-auto"
-        <form method = 'POST'>
-            <div class='mb-3'>
-            <input class="form-control" id="floatingInput" placeholder="Store Name" name = 'store_name'>
-            </div>
-            <div class='mb-3'>
-            <input class="form-control" id="floatingInput" placeholder="Location Info" name = 'location_info'>
-        </form>
-      <h1 class="fw-light mt-5">Categories Page</h1>
-      <p>
-        <a href="#" class="btn btn-primary my-2">Add Category</a>
-      </p>
-      <p class="lead text-muted">Click the respective cateogries to add menu items</p>
+    <div class="col-lg-6 col-md-8 mx-auto">
+      <h1 class="fw-light mt-5">Welcome to {{store.name}}</h1>
+      <p class="lead text-muted">Located at {{store.location}}</p>
     </div>
   </div>
 </section>
 {%endblock%}
 
 {%block main%}
+<!-- Image and text -->
+{%for category in categories%}
+<nav class="navbar navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">
+    {{category.name}}
+  </a>
+</nav>
 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-{%for i in range(6)%}
-    <div class="col">
+{%for product in products if product.category_id == category.id%}
+      <div class="col">
         <div class="card shadow-sm bg-dark">
           <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-  
           <div class="card-body">
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            <p class="card-text">{{product.name}}</p>
+            <p class="card-text">{{product.description}}</p>
+            <p class="card-text">${{product.price}}</p>
             <div class="d-flex justify-content-between align-items-center">
               <div class="btn-group">
-                <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                <button type="button" class="btn btn-sm btn-outline-secondary">Add to cart</button>
               </div>
-              <small class="text-muted">9 mins</small>
             </div>
           </div>
         </div>
       </div>
 {%endfor%}
 </div>
-
+{%endfor%}
 {%endblock%}
