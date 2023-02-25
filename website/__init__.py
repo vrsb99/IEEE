@@ -45,6 +45,10 @@ def config_app():
     
     # Setup for database
     with app.app_context():
-        db.create_all()
-    
+        try:
+            db.create_all()
+        except Exception:
+            db.drop_all()
+            db.create_all()
+            
     return app
