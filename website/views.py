@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for, session
+from flask import Flask, Blueprint, render_template, request, flash, redirect, url_for, session, send_file
 from flask_login import login_required, current_user
 from . import db
 from .models import User, Stores, Categories, Products
@@ -83,3 +83,8 @@ def add_items(store_id, category_id):
     
     
     return render_template("add_item.html", user=current_user)
+
+@views.route('/qr/<int:store_id>')
+@login_required
+def qr(store_id):
+    return render_template("qr.html", user=current_user, store_id=store_id)

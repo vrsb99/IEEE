@@ -1,7 +1,8 @@
-from flask import Flask
+from flask import Flask, request, send_file
 from flask_sqlalchemy import SQLAlchemy
 from os import path
 from flask_login import LoginManager
+from flask_qrcode import QRcode
 
 db = SQLAlchemy()
 DB_NAME = "clients.db"
@@ -12,6 +13,7 @@ def config_app():
     app.config['SECRET_KEY'] = 'IEEE'
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
     db.init_app(app)
+    qr_code = QRcode(app)
     
     # Importing the blueprints
     from .views import views
@@ -29,6 +31,12 @@ def config_app():
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'
     login_manager.init_app(app)
+    
+    @app.route("/qrcode", methods=["GET"])
+    def get_qrcode():
+        # please get /qrcode?data=<qrcode_data>
+        data = request.args.get("data", "")
+        return send_file(qr_code(data, mode="raw"), mimetype="image/png")
     
     @login_manager.user_loader
     def load_user(id):
