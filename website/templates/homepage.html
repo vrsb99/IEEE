@@ -91,7 +91,7 @@ IEEE
         <th scope="row">{{order.id}}</th>
         <td>{{order.product_name}}</td>
         <td>{{order.quantity}}</td>
-        <td>{{order.total}}</td>
+        <td>${{'%0.2f'| format(order.total|float)}}</td>
       </tr>
       {%endfor%}
       {%endif%}
