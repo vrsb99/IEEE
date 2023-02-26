@@ -32,7 +32,7 @@ class Products(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(150))
     description = db.Column(db.String(150))
-    price = db.Column(db.Integer)
+    price = db.Column(db.Float(precision=2))
     image = db.Column(db.LargeBinary)
     category_id = db.Column(db.Integer, db.ForeignKey("categories.id"))
     store_id = db.Column(db.Integer, db.ForeignKey("stores.id"))
@@ -41,7 +41,7 @@ class Products(db.Model):
 
 class Orders(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    #customers_id = db.Column(db.Integer, db.ForeignKey("customers.id"))
+    # customers_id = db.Column(db.Integer, db.ForeignKey("customers.id"))
     store_id = db.Column(db.Integer, db.ForeignKey("stores.id"))
     products_id = db.Column(db.Integer, db.ForeignKey("products.id"))
     quantity = db.Column(db.Integer)
