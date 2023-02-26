@@ -52,42 +52,33 @@ def original():
 @login_required
 def homepage():
     store = Stores.query.filter_by(user_id=current_user.id).first()
-    categories = (
-        Categories.query.filter_by(user_id=current_user.id).all() if store else None
-    )
-    store_name = store.name if store else None
-    store_location = store.location if store else None
-    store_id = store.id if store else None
-    orders = Orders.query.filter_by(store_id=store_id).all() if store_id else None
-
-    total = (
-        Orders.query.filter_by(store_id=store_id)
-        .with_entities(db.func.sum(Orders.total))
-        .scalar()
-        if store_id
-        else None
-    )
-
-    images = {}
-    if categories:
-        for category in categories:
-            if category.image:
-                images[category.id] = base64.b64encode(category.image).decode("utf-8")
-
-    if orders:
+    if store:
+        categories = Categories.query.filter_by(user_id=current_user.id).all()
+        store_name = store.name
+        store_location = store.location
+        store_id = store.id
+        orders = Orders.query.filter_by(store_id=store_id).all()
+        total = Orders.query.filter_by(store_id=store_id).with_entities(db.func.sum(Orders.total)).scalar()
+        images = {category.id: base64.b64encode(category.image).decode("utf-8") for category in categories if category.image}
         order_info = []
         for order in orders:
-            order_details = {}
-            order_details["id"] = order.id
-            order_details["product_name"] = (
-                Products.query.filter_by(id=order.products_id).first().name
-            )
-            order_details["quantity"] = order.quantity
-            order_details["total"] = (
-                order.quantity
-                * Products.query.filter_by(id=order.products_id).first().price
-            )
+            product = Products.query.filter_by(id=order.products_id).first()
+            order_details = {
+                "id": order.id,
+                "product_name": product.name,
+                "quantity": order.quantity,
+                "total": order.quantity * product.price,
+            }
             order_info.append(order_details)
+    else:
+        categories = None
+        store_name = None
+        store_location = None
+        store_id = None
+        orders = None
+        total = None
+        images = {}
+        order_info = []
 
     if request.method == "POST":
         data = request.form
@@ -95,16 +86,11 @@ def homepage():
         store_location_input = data.get("store_location")
 
         if store_name_input and store_location_input:
-
-            if store_name and store_location:
+            if store:
                 store.name = store_name_input
                 store.location = store_location_input
             else:
-                new_store = Stores(
-                    name=store_name_input,
-                    location=store_location_input,
-                    user_id=current_user.id,
-                )
+                new_store = Stores(name=store_name_input, location=store_location_input, user_id=current_user.id)
                 db.session.add(new_store)
 
             db.session.commit()
@@ -113,38 +99,16 @@ def homepage():
         else:
             flash("Please fill all the fields", category="error")
 
-    if store_name and store_location and categories and orders:
-        return render_template(
-            "homepage.html",
-            user=current_user,
-            store_name=store_name,
-            store_location=store_location,
-            categories=categories,
-            store_id=store_id,
-            order_info=order_info,
-            total=total,
-            images=images,
-        )
-    elif store and categories:
-        return render_template(
-            "homepage.html",
-            user=current_user,
-            store_name=store_name,
-            store_location=store_location,
-            categories=categories,
-            store_id=store_id,
-            images=images,
-        )
-    elif store:
-        return render_template(
-            "homepage.html",
-            user=current_user,
-            store_name=store_name,
-            store_location=store_location,
-            store_id=store_id,
-        )
-    else:
-        return render_template("homepage.html", user=current_user)
+    return render_template("homepage.html",
+        user=current_user,
+        store_name=store_name,
+        store_location=store_location,
+        categories=categories,
+        store_id=store_id,
+        order_info=order_info,
+        total=total,
+        images=images,
+    )
 
 
 @views.route("/add_category/<int:store_id>", methods=["GET", "POST"])
@@ -203,32 +167,29 @@ def add_items(store_id, category_id):
         item_price = request.form.get("item_price")
         image = request.files.get("item_image")
 
-        if item_name and item_price and item_description:
-            new_item = Products(
-                name=item_name,
-                description=item_description,
-                price=item_price,
-                category_id=category_id,
-                store_id=store_id,
-            )
-
-            if image and allowed_file(image.filename):
-                new_item.image = image.read()
-
-            try:
-                db.session.add(new_item)
-                db.session.commit()
-                flash("Item added successfully", category="success")
-                return redirect(
-                    url_for("views.items", category_id=category_id, store_id=store_id)
-                )
-            except Exception as e:
-                db.session.rollback()
-                flash(f"Error adding item: {str(e)}", category="error")
-        else:
+        if not (item_name and item_price and item_description):
             flash("Please fill all the fields", category="error")
+            return render_template("add_item.html", user=current_user)
 
-    return render_template("add_item.html", user=current_user)
+        new_item = Products(
+            name=item_name,
+            description=item_description,
+            price=item_price,
+            category_id=category_id,
+            store_id=store_id,
+        )
+
+        if image and allowed_file(image.filename):
+            new_item.image = image.read()
+
+        try:
+            db.session.add(new_item)
+            db.session.commit()
+            flash("Item added successfully", category="success")
+            return redirect(url_for("views.items", category_id=category_id, store_id=store_id))
+        except Exception as e:
+            db.session.rollback()
+            flash(f"Error adding item: {str(e)}", category="error")
 
     return render_template("add_item.html", user=current_user)
 
