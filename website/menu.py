@@ -26,7 +26,7 @@ def homepage(store_id):
         data = request.form
 
         for product in products:
-            if value := data.get(str(product.id)):
+            if value := data.get(str(product.id)) and data.get(str(product.id))  != "0":
                 new_order = Orders(
                     products_id=product.id, quantity=int(value), store_id=store_id
                 )
