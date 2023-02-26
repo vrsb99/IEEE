@@ -14,6 +14,9 @@ def homepage(store_id):
     products = Products.query.filter_by(store_id=store_id).all()
     images = {}
 
+    if not store:
+        return redirect(url_for("views.homepage"))
+
     for product in products:
         if product.image:
             images[product.id] = base64.b64encode(product.image).decode("utf-8")
